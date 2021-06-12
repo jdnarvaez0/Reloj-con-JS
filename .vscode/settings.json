@@ -1,0 +1,8 @@
+{
+  "editor.fontFamily": "'Firca Code Medium', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+  "editor.fontSize": 16,
+  "editor.lineHeight": 23,
+  "editor.fontLigatures": true,
+  "liveServer.settings.port": 5501,
+  "editor.tabSize": 2,
+}

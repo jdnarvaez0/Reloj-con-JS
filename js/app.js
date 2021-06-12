@@ -1,6 +1,6 @@
-const hourVar = document.querySelector('.hour');
-const minuteVar = document.querySelector('.minute');
-const secondVar = document.querySelector('.second');
+const HOURHAND = document.querySelector("#hour");
+const MINUTEHAND = document.querySelector("#minute");
+const SECONDHAND = document.querySelector("#second");
 const timeVar = document.querySelector('.time');
 const dateVar = document.querySelector('.date');
 const toggle = document.querySelector('.toggle');
@@ -19,23 +19,38 @@ toggle.addEventListener('click', (e) => {
   }
 });
 
-function setTime() {
+// funcion que corre el reljo
+const runClock = () => {
   const time = new Date();
-  const month = time.getMonth();
+
   const day = time.getDay();
-  const date = time.getDate();
-  const hours = time.getHours();
-  const hoursClock = hours >= 13 ? hours % 12 : hours;
-  const minutes = time.getMinutes();
-  const seconds = time.getSeconds();
-  const ampm = hours >= 12 ? 'PM' : 'AM'
+  const hr = time.getHours();
+  const min = time.getMinutes();
+  const sec = time.getSeconds();
+  const month = time.getMonth();
+  const date = time.getDate()
+  const hoursClock = time >= 13 ? hr % 12 : hr;
+  const ampm = hr >= 12 ? 'PM' : 'AM'
 
-  hourVar.style.transform = `translate(-50%, -100%) rotate(${scale(hoursForClock, 0, 11, 0, 360)}deg)`
-  minuteVar.style.transform = `translate(-50%, -100%) rotate(${scale(minutes, 0, 59, 0, 360)}deg)`
-  secondVar.style.transform = `translate(-50%, -100%) rotate(${scale(seconds, 0, 59, 0, 360)}deg)`
+  let hrPosition = (hr * 359) / 12 + (min * (360 / 60)) / 12;
+  let minPosition = (min * 359) / 60 + (sec * (360 / 60)) / 60;
+  let secPosition = (sec * 359) / 60;
 
-  timeVar.innerHTML = `${hoursClock}:${minutes < 10 ? `0${minutes}` : minutes} ${ampm}`
+  console.log(secPosition);
+
+  hrPosition = hrPosition + 3 / 360;
+  minPosition = minPosition + 6 / 60;
+  secPosition = secPosition + 6;
+
+  HOURHAND.style.transform = "rotate(" + hrPosition + "deg)";
+  MINUTEHAND.style.transform = "rotate(" + minPosition + "deg)";
+  SECONDHAND.style.transform = "rotate(" + secPosition + "deg)";
+
+  timeVar.innerHTML = `${hoursClock}:${min < 10 ? `0${min}` : min} ${ampm}`
   dateVar.innerHTML = `${days[day]}, ${months[month]} <span class="circle">${date}</span>`
-}
+};
+
+setInterval(runClock, 1000);
+
 
 
